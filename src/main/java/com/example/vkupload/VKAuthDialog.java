@@ -9,6 +9,7 @@ public class VKAuthDialog extends Dialog<VKAccessToken> {
     private final TextField loginField = new TextField();
     private final PasswordField passwordField = new PasswordField();
 
+
     public VKAuthDialog() {
         // Устанавливаем заголовок диалога
         setTitle("Авторизация VK");
@@ -51,11 +52,8 @@ public class VKAuthDialog extends Dialog<VKAccessToken> {
                     // Авторизуемся в VK API и получаем access_token
                     VKApi vkApi = new VKApi(appId, appSecret, login, password);
                     String accessToken = vkApi.getAccessToken();
-
-                    // Сохраняем access_token в переменную
-                    this.accessToken = accessToken;
-
-                    return accessToken;
+                    VKAccessToken vkAccessToken = new VKAccessToken(accessToken);
+                    return vkAccessToken;
                 } catch (Exception e) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Ошибка авторизизации VK");

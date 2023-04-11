@@ -4,7 +4,7 @@ public class VKAccessToken {
     private String accessToken;
     private int userId;
 
-    public VKAccessToken(String accessToken, int userId) {
+    public VKAccessToken(String accessToken) {
         this.accessToken = accessToken;
         this.userId = userId;
     }

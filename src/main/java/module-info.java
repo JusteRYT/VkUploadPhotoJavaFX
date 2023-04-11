@@ -3,6 +3,9 @@ module com.example.vkupload {
     requires javafx.fxml;
     requires org.json;
     requires sdk;
+    requires org.apache.httpcomponents.httpcore;
+    requires org.apache.httpcomponents.httpclient;
+    requires java.xml.bind;
 
 
     opens com.example.vkupload to javafx.fxml;
