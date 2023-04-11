@@ -51,7 +51,7 @@ public class VKAuthDialog extends Dialog<VKAccessToken> {
 
                     // Авторизуемся в VK API и получаем access_token
                     VKApi vkApi = new VKApi(appId, appSecret, login, password);
-                    String accessToken = vkApi.getAccessToken();
+                    String accessToken = vkApi.getAccessToken(vkApi.getAuthorizationCode());
                     VKAccessToken vkAccessToken = new VKAccessToken(accessToken);
                     return vkAccessToken;
                 } catch (Exception e) {

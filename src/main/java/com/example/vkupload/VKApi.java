@@ -1,16 +1,14 @@
 package com.example.vkupload;
 
-import com.vk.api.sdk.actions.OAuth;
 import com.vk.api.sdk.client.VkApiClient;
-import com.vk.api.sdk.client.actors.UserActor;
 import com.vk.api.sdk.exceptions.ApiException;
 import com.vk.api.sdk.exceptions.ClientException;
 import com.vk.api.sdk.httpclient.HttpTransportClient;
 import com.vk.api.sdk.objects.UserAuthResponse;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-
-import static com.sun.javafx.scene.control.skin.FXVK.vk;
+import java.io.InputStreamReader;
 
 public class VKApi {
     private int appId;
@@ -29,18 +27,13 @@ public class VKApi {
 
     public String getAuthorizationCode() throws IOException {
         // Параметры авторизации
-        String clientId = "your_client_id";
-        String redirectUri = "https://oauth.vk.com/blank.html";
         String scope = "friends,photos,audio,video,docs,notes,pages,status,wall,groups,messages,offline";
         String responseType = "code";
 
         // Получение URL для запроса авторизации
         String authorizationUri = vk.oAuth()
-                .authorizationCodeFlow(clientId, redirectUri)
-                .scope(scope)
-                .responseType(responseType)
-                .state("secret_state_string")
-                .build();
+                .userAuthorizationCodeFlow(appId, redirectUri, responseType, scope)
+                .build().toString();
 
         // Предполагается, что эта ссылка будет открыта пользователем в браузере, и пользователь разрешит доступ
         System.out.println("Please open the following URL in your browser and authorize the application:");
@@ -60,4 +53,5 @@ public class VKApi {
                 .execute();
 
         return authResponse.getAccessToken();
+    }
 }
