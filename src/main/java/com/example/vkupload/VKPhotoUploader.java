@@ -17,6 +17,7 @@ public class VKPhotoUploader extends Application {
     private ListView<String> photoList;
     private ProgressBar progressBar;
     private Label progressLabel;
+    private VKAccessToken accessToken;
 
     public static void main(String[] args) {
         launch(args);
@@ -59,10 +60,8 @@ public class VKPhotoUploader extends Application {
         loginButton.setOnAction(event -> {
             VKAuthDialog dialog = new VKAuthDialog();
             Optional<VKAccessToken> result = dialog.showAndWait();
-            if (result.isPresent()) {
-                VKAccessToken accessToken = result.get();
-                // Используйте полученный access token для вызова VK API методов
-            }
+            // Используйте полученный access token для вызова VK API методов
+            result.ifPresent(vkAccessToken -> accessToken = vkAccessToken);
         });
 
         // ProgressBar для отображения прогресса загрузки
@@ -98,10 +97,14 @@ public class VKPhotoUploader extends Application {
         VBox photoListContainer = new VBox(10, new Label("Список фотографий"), photoList, addPhotoButton);
         photoListContainer.setPadding(new Insets(10));
         photoListContainer.setAlignment(Pos.CENTER);
+        HBox progressBox = new HBox(10, progressBar, progressLabel);
+        progressBox.setAlignment(Pos.CENTER);
         // Создание основной панели с элементами управления
-        VBox root = new VBox(20,login, groupBox, groupListContainer, photoListContainer, buttonsBox);
+        VBox root = new VBox(20,login, groupBox, groupListContainer, photoListContainer, buttonsBox, progressBox);
         root.setPadding(new Insets(20));
         root.setAlignment(Pos.CENTER);
+
+
 
         // Создание сцены и отображение приложения
         Scene scene = new Scene(root, 600, 600);
